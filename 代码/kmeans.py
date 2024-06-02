@@ -81,8 +81,21 @@ for i in range(2, 7):
     score_kind_2.append(silhouette_score(data_list_kind_2, model_2[1]))
 
 
+def line_plot(data, title, path):
+    plt.figure(figsize=(15, 10))
+    sns.lineplot(x=range(2, 7), y=data, color='b')
+    plt.xlabel('cluster')
+    plt.ylabel('轮廓系数')
+    plt.title(title)
+    plt.savefig(os.path.join(path, title + '.png'))
+    plt.cla()
+    plt.close()
 
 
+line_plot(score_kind_1, '轮廓系数确定的最佳k值(高钾)（风化后）', '过程性文件/picture/第二问图像/轮廓系数')
+line_plot(score_kind_2, '轮廓系数确定的最佳k值(铅钡)（风化后）', '过程性文件/picture/第二问图像/轮廓系数')
+
+'''
 plt.figure()
 plt.subplot(1, 2, 1)
 plt.plot(range(2, 7), score_kind_1, 'r*-')
@@ -98,6 +111,7 @@ plt.ylabel('轮廓系数')
 plt.title('轮廓系数确定的最佳k值(铅钡)')
 plt.subplots_adjust(wspace=0.5)
 plt.savefig(r'过程性文件/picture/第二问图像/轮廓系数/最佳k值(高钾与铅钡)（风化后）.png')
+'''
 
 # 假如我要构造一个聚类数为3的聚类器
 estimator_kind_1 = KMeans(n_clusters=3)  # 构造聚类器
