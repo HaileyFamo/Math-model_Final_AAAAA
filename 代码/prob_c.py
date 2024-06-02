@@ -1334,10 +1334,28 @@ writer = pd.ExcelWriter('过程性文件/data/第四问数据/偏相关系数.xl
 partial_corr_kind_1.to_excel(writer, sheet_name='高钾')
 partial_corr_kind_2.to_excel(writer, sheet_name='铅钡')
 writer.close()
+
 """
-    热力图绘制
+画箱型图
 """
 
+
+def box_plot(data, title, path):
+
+    plt.figure(figsize=(15, 10))
+    sns.boxplot(data=data, palette="Set3")
+    plt.title(title, fontsize=20)
+    plt.savefig(os.path.join(path, title + '.png'))
+    plt.cla()
+    plt.close()
+
+
+box_plot(corr_kind_1, '高钾相关系数箱型图', '过程性文件/picture/第四问热力图')
+box_plot(corr_kind_2, '铅钡相关系数箱型图', '过程性文件/picture/第四问热力图')
+box_plot(partial_corr_kind_1, '高钾偏相关系数箱型图', '过程性文件/picture/第四问热力图')
+box_plot(partial_corr_kind_2, '铅钡偏相关系数箱型图', '过程性文件/picture/第四问热力图')
+
+'''
 
 def heat_map(data, title, path):
     # 绘图风格
@@ -1367,3 +1385,4 @@ heat_map(corr_kind_1, '高钾相关系数', '过程性文件\picture\第四问�
 heat_map(corr_kind_2, '铅钡相关系数', '过程性文件\picture\第四问热力图')
 heat_map(partial_corr_kind_1, '高钾偏相关系数', '过程性文件\picture\第四问热力图')
 heat_map(partial_corr_kind_2, '铅钡偏相关系数', '过程性文件\picture\第四问热力图')
+'''
