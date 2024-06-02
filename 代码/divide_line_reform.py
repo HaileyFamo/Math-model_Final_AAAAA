@@ -49,4 +49,4 @@ for ingredient in divide_line_weather.index:
     new_divide_line_weather.loc[ingredient]['down'] = divide_line_weather.loc[ingredient]['down']
 divide_line_weather = new_divide_line_weather
 print("Finish.")
-divide_line_weather.to_excel(r'./过程性文件/data/第三问数据/分界值/分界值（风化后）.xlsx')
+divide_line_weather.to_excel(r'过程性文件/data/第三问数据/分界值/分界值（风化后）.xlsx')

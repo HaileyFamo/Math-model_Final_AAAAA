@@ -8,8 +8,8 @@ from matplotlib import pyplot as plt
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
 plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 
-path_weather = r'D:\我的文档\大二下\数学建模\2022CUMCM-C\过程性文件\data\第一问数据\预测数据\预测数据(经过标准化）(风化后）.xlsx'
-path_no_weather = r'D:\我的文档\大二下\数学建模\2022CUMCM-C\过程性文件\data\第一问数据\预测数据\预测数据(经过标准化）（风化前）.xlsx'
+path_weather = r'过程性文件\data\第一问数据\预测数据\预测数据(经过标准化）(风化后）.xlsx'
+path_no_weather = r'过程性文件\data\第一问数据\预测数据\预测数据(经过标准化）（风化前）.xlsx'
 data = pd.read_excel(path_weather, index_col=0, header=0)
 
 ingredients = list(data.columns[:14])
