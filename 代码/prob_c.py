@@ -15,7 +15,7 @@ sns.set_style({"font.sans-serif": ['simhei', 'Droid Sans Fallback']})
 """
     数据读取
 """
-data_path = r'data/题目原始数据/附件.xlsx'
+data_path = r'题目\附件.xlsx'
 # 表单1
 data_sheet_1 = pd.read_excel(data_path, index_col=0, sheet_name='表单1')
 # 表单2
@@ -63,7 +63,7 @@ for row_index in sheet_2_index:
     else:
         sheet_2_data_valid[row_index] = 0
 sheet_2_data_valid_df = pd.DataFrame(sheet_2_data_valid.values(), index=sheet_2_data_valid.keys(), columns=['是否有效'])
-sheet_2_data_valid_df.to_excel('data/第一问数据/表单2数据有效性.xlsx')
+sheet_2_data_valid_df.to_excel('过程性文件\data\第一问数据\数据有效性\表单2数据有效性.xlsx')
 
 """
     表单1数据统计
@@ -121,36 +121,6 @@ for index in no_weather_index:
     else:
         no_weather_info['颜色'][color] += 1
 
-"""
-    表单1堆叠柱状图
-"""
-# 纹饰图
-name_list = no_weather_info['纹饰'].keys()
-grid = plt.GridSpec(2, 4)
-plt.figure()
-plt.subplot(grid[0, 0:2])
-plt.bar(range(len(name_list)), no_weather_info['纹饰'].values(), label='未风化', fc='dodgerblue', width=0.4)
-plt.bar(range(len(name_list)), weather_info['纹饰'].values(), bottom=list(no_weather_info['纹饰'].values()),
-        label='风化', tick_label=list(name_list), fc='xkcd:powder blue', width=0.4)
-plt.legend()
-
-# 类型图
-name_list = no_weather_info['类型'].keys()
-plt.subplot(grid[0, 2:4])
-plt.bar(range(len(name_list)), no_weather_info['类型'].values(), label='未风化', fc='dodgerblue', width=0.2)
-plt.bar(range(len(name_list)), weather_info['类型'].values(), bottom=list(no_weather_info['类型'].values()),
-        label='风化', tick_label=list(name_list), fc='xkcd:powder blue', width=0.2)
-plt.legend()
-
-# 颜色图
-name_list = no_weather_info['颜色'].keys()
-plt.subplot(grid[1, :])
-plt.bar(range(len(name_list)), no_weather_info['颜色'].values(), label='未风化', fc='dodgerblue')
-plt.bar(range(len(name_list)), weather_info['颜色'].values(), bottom=list(no_weather_info['颜色'].values()),
-        label='风化', tick_label=list(name_list), fc='xkcd:powder blue')
-plt.legend()
-plt.tight_layout()
-plt.savefig(r'picture/第一问图像/风化程度与类型、纹饰、颜色关系图/合并图.png')
 
 """
     结合玻璃类型，分析文物样品表面有无风化化学成分含量的统计规律
@@ -189,9 +159,9 @@ for index in sheet_2_index:
         weather_df.append(data_sheet_2.loc[index].values)
 
 weather_df = pd.DataFrame(weather_df, index=weather_index_2, columns=data_sheet_2.columns)
-weather_df.to_excel(r'data/第一问数据/表面有无风化的统计规律/化的所有文物数据.xlsx')
+weather_df.to_excel(r'过程性文件\data\第一问数据\表面有无风化的统计规律\风化的所有文物数据.xlsx')
 no_weather_df = pd.DataFrame(no_weather_df, index=no_weather_index_2, columns=data_sheet_2.columns)
-no_weather_df.to_excel(r'data/第一问数据/表面有无风化的统计规律/未风化的所有文物数据.xlsx')
+no_weather_df.to_excel(r'过程性文件\data\第一问数据\表面有无风化的统计规律\未风化的所有文物数据.xlsx')
 
 """
     表单2所有元素标注，类型和风化或未风化
@@ -241,7 +211,7 @@ for index in sheet_2_index:
     data_valid = sheet_2_data_valid[index]
     if data_valid == 0:
         data_sheet_2_copy.drop(index, inplace=True)
-data_sheet_2_copy.to_excel(r'data/第一问数据/风化前的含量预测/带风化分类与颜色的数据（删去无效数据）.xlsx')
+data_sheet_2_copy.to_excel(r'过程性文件\data\第一问数据\风化前的含量预测\带风化分类与颜色的数据（删去无效数据）.xlsx')
 
 """
     统计风化的文物中每一个元素的百分比
@@ -253,7 +223,7 @@ data_sheet_2_copy.to_excel(r'data/第一问数据/风化前的含量预测/带�
     sheet_2_color = []          # 颜色
     sheet_2_kind = []           # 种类
 """
-sheet_2_pro_path = r'data/第一问数据/风化前的含量预测/带风化分类与颜色的数据（删去无效数据）.xlsx'
+sheet_2_pro_path = r'过程性文件\data\第一问数据\风化前的含量预测\带风化分类与颜色的数据（删去无效数据）.xlsx'
 sheet_2_pro = pd.read_excel(sheet_2_pro_path, index_col=0, header=0)
 # 读取处理过的数据
 sheet_2_no_weather = sheet_2_pro.loc[:, '无风化']
@@ -336,7 +306,7 @@ for ingredient in weather_ingredients_dict.keys():
     sns.kdeplot(weather_ingredient_kind_1, label='有风化高钾')
     sns.kdeplot(no_weather_ingredient_kind_1, label='无风化高钾')
     plt.legend()
-    plt.savefig(r'picture/第一问图像/核密度图/高钾/{}含量与风化关系图(高钾）.png'.format(ingredient))
+    plt.savefig(r'过程性文件/picture/第一问图像/核密度图/高钾/{}含量与风化关系图(高钾）.png'.format(ingredient))
 
     # 绘制铅钡图
     plt.figure()
@@ -345,7 +315,7 @@ for ingredient in weather_ingredients_dict.keys():
     sns.kdeplot(weather_ingredient_kind_2, label='有风化铅钡')
     sns.kdeplot(no_weather_ingredient_kind_2, label='无风化铅钡')
     plt.legend()
-    plt.savefig(r'picture/第一问图像/核密度图/铅钡/{}含量与风化关系图（铅钡）.png'.format(ingredient))
+    plt.savefig(r'过程性文件/picture/第一问图像/核密度图/铅钡/{}含量与风化关系图（铅钡）.png'.format(ingredient))
 """
     根据风化点检测数据，预测其风化前的化学成分含量。
 """
@@ -422,7 +392,7 @@ for num in range(len(sheet_2_pro_index)):
 
                 if row_data.loc[column] < 0:
                     row_data.loc[column] = 0
-sheet_2_predict_no_weather.to_excel(r'data/第二问模型/预测数据（未经标准化）/预测数据（无风化）.xlsx')
+sheet_2_predict_no_weather.to_excel(r'过程性文件/data/第二问模型/预测数据（未经标准化）/预测数据（无风化）.xlsx')
 
 """
     表单2计算所有的风化后的数据
@@ -467,7 +437,7 @@ for num in range(len(sheet_2_pro_index)):
                 if row_data.loc[column] < 0:
                     row_data.loc[column] = 0
 
-sheet_2_predict_weather.to_excel(r'data/第二问模型/预测数据（未经标准化）/预测数据（有风化）.xlsx')
+sheet_2_predict_weather.to_excel(r'过程性文件/data/第二问模型/预测数据（未经标准化）/预测数据（有风化）.xlsx')
 
 
 """
@@ -484,7 +454,7 @@ for index in sheet_2_predict_no_weather.index:
         std_rate = data_sum / std_num
         for data_index in range(len(column_data)):
             sheet_2_predict_no_weather.loc[index][data_index] /= std_rate
-sheet_2_predict_no_weather.to_excel(r'data/第二问模型/预测数据（经过标准化）/预测数据（无风化）(经过标准化）.xlsx')
+sheet_2_predict_no_weather.to_excel(r'过程性文件/data/第二问模型/预测数据（经过标准化）/预测数据（无风化）(经过标准化）.xlsx')
 
 """
     对sheet_2_no_weather进行归100化
@@ -498,7 +468,7 @@ for index in sheet_2_predict_weather.index:
         std_rate = data_sum / std_num
         for data_index in range(len(column_data)):
             sheet_2_predict_weather.loc[index][data_index] /= std_rate
-sheet_2_predict_weather.to_excel(r'data/第二问模型/预测数据（经过标准化）/预测数据(经过标准化）(风化后）.xlsx')
+sheet_2_predict_weather.to_excel(r'过程性文件/data/第二问模型/预测数据（经过标准化）/预测数据(经过标准化）(风化后）.xlsx')
 
 """
     预测数据归一化
@@ -533,7 +503,7 @@ for index in sheet_2_pro.index:
                 continue
             sheet_2_predict_normalize.loc[index][column] /= col_sum
 sheet_2_predict_normalize.to_excel(
-    r'data/第二问模型/预测数据（经过按列归一化）/经过标准化和归一化的预测数据(无风化）.xlsx')
+    r'过程性文件/data/第二问模型/预测数据（经过按列归一化）/经过标准化和归一化的预测数据(无风化）.xlsx')
 
 """
     风化预测数据归一化
@@ -567,7 +537,7 @@ for index in sheet_2_pro.index:
             sheet_2_predict_weather_normalize.loc[index][column] /= col_sum
 
 sheet_2_predict_weather_normalize.to_excel(
-    r'data/第二问模型/预测数据（经过按列归一化）/经过标准化和归一化的预测数据(全部为风化后）.xlsx')
+    r'过程性文件/data/第二问模型/预测数据（经过按列归一化）/经过标准化和归一化的预测数据(全部为风化后）.xlsx')
 
 """
     分类划分（无归一化）
@@ -738,14 +708,14 @@ for ingredient in relevant_ingredient_dict.keys():
     plt.plot(kind_2_data, label='铅钡')
     plt.hlines(best_divide, -5, 60, linestyles='dashed')
     plt.legend()
-    plt.savefig(r'picture/第三问图像/分界线数据/{}(风化前数据）.png'.format(ingredient))
+    plt.savefig(r'过程性文件/picture/第三问图像/分界线数据/{}(风化前数据）.png'.format(ingredient))
 
 # 输出到excel
 best_divide_dict_df = pd.DataFrame(index=best_divide_dict.keys(), columns=['num', 'up', 'down'])
 for index in best_divide_dict_df.index:
     for column in best_divide_dict_df.columns:
         best_divide_dict_df.loc[index][column] = best_divide_dict[index][column]
-best_divide_dict_df.to_excel(r'data/第三问数据/分界值/分界值（归一化）(风化前）.xlsx')
+best_divide_dict_df.to_excel(r'过程性文件/data/第三问数据/分界值/分界值（归一化）(风化前）.xlsx')
 
 # 风化后
 best_divide_dict_weather = {}
@@ -804,14 +774,14 @@ for ingredient in relevant_ingredient_dict_weather.keys():
     plt.plot(kind_2_data, label='铅钡')
     plt.hlines(best_divide, -5, 60, linestyles='dashed')
     plt.legend()
-    plt.savefig(r'picture/第三问图像/分界线数据/{}(风化后数据）.png'.format(ingredient))
+    plt.savefig(r'过程性文件/picture/第三问图像/分界线数据/{}(风化后数据）.png'.format(ingredient))
 
 # 输出到excel
 best_divide_dict_weather_df = pd.DataFrame(index=best_divide_dict_weather.keys(), columns=['num', 'up', 'down'])
 for index in best_divide_dict_weather_df.index:
     for column in best_divide_dict_weather_df.columns:
         best_divide_dict_weather_df.loc[index][column] = best_divide_dict_weather[index][column]
-best_divide_dict_weather_df.to_excel(r'data/第三问数据/分界值/分界值（归一化）(风化后）.xlsx')
+best_divide_dict_weather_df.to_excel(r'过程性文件/data/第三问数据/分界值/分界值（归一化）(风化后）.xlsx')
 
 """
     计算权重
@@ -838,7 +808,7 @@ for ingredient in ingredient_weight.keys():
     value = ingredient_weight[ingredient]
     ingredient_weight[ingredient] = value / weight_sum
 ingredient_weight_df = pd.DataFrame(ingredient_weight.values(), index=ingredient_weight.keys(), columns=['权重'])
-ingredient_weight_df.to_excel(r'picture/第三问图像/分界线权重/权重（风化前）.xlsx')
+ingredient_weight_df.to_excel(r'过程性文件/picture/第三问图像/分界线权重/权重（风化前）.xlsx')
 
 # 每种元素的权重(风化后）
 ingredient_weight_weather = {}
@@ -858,7 +828,7 @@ for ingredient in ingredient_weight_weather.keys():
 
 ingredient_weight_weather_df = pd.DataFrame(ingredient_weight_weather.values(), index=ingredient_weight_weather.keys(),
                                             columns=['权重'])
-ingredient_weight_weather_df.to_excel(r'picture/第三问图像/分界线权重/权重（风化后）.xlsx')
+ingredient_weight_weather_df.to_excel(r'过程性文件/picture/第三问图像/分界线权重/权重（风化后）.xlsx')
 
 """
     风化前的规律验证
@@ -910,7 +880,7 @@ for index in sheet_2_predict_no_weather.index:
 
 judge_result_df = pd.DataFrame(judge_result.values(), index=judge_result.keys(),
                                columns=['预测种类', '高钾得分', '铅钡得分'])
-judge_result_df.to_excel(r'data/第三问数据/模型验证数据/模型检验数据（风化前）.xlsx')
+judge_result_df.to_excel(r'过程性文件/data/第三问数据/模型验证数据/模型检验数据（风化前）.xlsx')
 
 """
     风化后的规律验证
@@ -962,7 +932,7 @@ for index in sheet_2_predict_no_weather.index:
 
 judge_result_df = pd.DataFrame(judge_result_weather.values(), index=judge_result.keys(),
                                columns=['预测种类', '高钾得分', '铅钡得分'])
-judge_result_df.to_excel(r'data/第三问数据/模型验证数据/模型检验数据（风化后）.xlsx')
+judge_result_df.to_excel(r'过程性文件/data/第三问数据/模型验证数据/模型检验数据（风化后）.xlsx')
 
 """
     亚类数据的合理性分析和灵敏度分析(另一份代码里）
@@ -1059,7 +1029,7 @@ for index in data_sheet_3.index:
 
 predict_result_3_df = pd.DataFrame(predict_result_3.values(), index=data_sheet_3.index,
                                    columns=['预测种类', '高钾得分', '铅钡得分'])
-predict_result_3_df.to_excel(r'data/第三问数据/预测结果/第三问预测结果(归一化）.xlsx')
+predict_result_3_df.to_excel(r'过程性文件/data/第三问数据/预测结果/第三问预测结果(归一化）.xlsx')
 
 """
     敏感性分析
@@ -1194,7 +1164,7 @@ for change_ingredient_index in range(len(ingredient_weight_weather.keys()) - cha
     result_dict[change_ingredient_index, change_ingredient_index + change_num] = cur_result_dict
 
 result_dict_df = pd.DataFrame(result_dict.values(), index=result_dict.keys())
-result_dict_df.to_excel('data/第三问数据/灵敏度分析/灵敏度分析数据(消去{}个元素）.xlsx'.format(change_num))
+result_dict_df.to_excel('过程性文件/data/第三问数据/灵敏度分析/灵敏度分析数据(消去{}个元素）.xlsx'.format(change_num))
 
 """
     第三问灵敏度分析思路二
@@ -1303,7 +1273,7 @@ plt.xticks(range(len(x)), x_1)
 plt.xlabel('元素含量')
 plt.ylabel('正确率')
 plt.legend()
-plt.savefig(r'picture/第三问图像/灵敏度分析/灵敏度分析（有风化分界线）（改变{}个元素）.png'.format(change_num))
+plt.savefig(r'过程性文件/picture/第三问图像/灵敏度分析/灵敏度分析（有风化分界线）（改变{}个元素）.png'.format(change_num))
 
 """
     第四问
@@ -1318,21 +1288,21 @@ sheet_2_predict_normalize_kind_2 = pd.DataFrame(sheet_2_predict_normalize_kind_2
 corr_kind_1 = sheet_2_predict_normalize_kind_1.corr('spearman')
 corr_kind_2 = sheet_2_predict_normalize_kind_2.corr('spearman')
 
-writer = pd.ExcelWriter('data/第四问数据/相关系数.xlsx')
+writer = pd.ExcelWriter('过程性文件/data/第四问数据/相关系数.xlsx')
 
 corr_kind_1.to_excel(writer, sheet_name='高钾')
 corr_kind_2.to_excel(writer, sheet_name='铅钡')
-writer.save()
+writer.close()
 
 # 偏相关系数
 partial_corr_kind_1 = sheet_2_predict_normalize_kind_1.pcorr()
 # print(partial_corr_kind_1)
 partial_corr_kind_2 = sheet_2_predict_normalize_kind_2.pcorr()
 
-writer = pd.ExcelWriter('data/第四问数据/偏相关系数.xlsx')
+writer = pd.ExcelWriter('过程性文件/data/第四问数据/偏相关系数.xlsx')
 partial_corr_kind_1.to_excel(writer, sheet_name='高钾')
 partial_corr_kind_2.to_excel(writer, sheet_name='铅钡')
-writer.save()
+writer.close()
 """
     热力图绘制
 """
@@ -1362,7 +1332,7 @@ def heat_map(data, title, path):
     plt.cla()
     plt.close(fig)
 
-heat_map(corr_kind_1, '高钾相关系数', 'picture/第四问热力图')
-heat_map(corr_kind_2, '铅钡相关系数', 'picture/第四问热力图')
-heat_map(partial_corr_kind_1, '高钾偏相关系数', 'picture/第四问热力图')
-heat_map(partial_corr_kind_2, '铅钡偏相关系数', 'picture/第四问热力图')
+heat_map(corr_kind_1, '高钾相关系数', '过程性文件\picture\第四问热力图')
+heat_map(corr_kind_2, '铅钡相关系数', '过程性文件\picture\第四问热力图')
+heat_map(partial_corr_kind_1, '高钾偏相关系数', '过程性文件\picture\第四问热力图')
+heat_map(partial_corr_kind_2, '铅钡偏相关系数', '过程性文件\picture\第四问热力图')

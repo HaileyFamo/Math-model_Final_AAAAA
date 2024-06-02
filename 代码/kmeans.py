@@ -8,8 +8,8 @@ from matplotlib import pyplot as plt
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
 plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 
-path_weather = r'data/第一问数据/预测数据(经过标准化）(风化后）.xlsx'
-path_no_weather = r'data/第一问数据/预测数据(经过标准化）.xlsx'
+path_weather = r'D:\我的文档\大二下\数学建模\2022CUMCM-C\过程性文件\data\第一问数据\预测数据\预测数据(经过标准化）(风化后）.xlsx'
+path_no_weather = r'D:\我的文档\大二下\数学建模\2022CUMCM-C\过程性文件\data\第一问数据\预测数据\预测数据(经过标准化）（风化前）.xlsx'
 data = pd.read_excel(path_weather, index_col=0, header=0)
 
 ingredients = list(data.columns[:14])
@@ -43,8 +43,8 @@ for index in data_kind_2.index:
             new_data_kind_2.loc[index][column] = data_kind_2.loc[index][column] / col_sum
 data_kind_2 = new_data_kind_2
 
-data_kind_1.to_excel('data/第二问模型/亚类划分结果/高钾（风化后）.xlsx')
-data_kind_2.to_excel('data/第二问模型/亚类划分结果/铅钡（风化后）.xlsx')
+data_kind_1.to_excel('过程性文件/data/第二问模型/亚类划分结果/高钾（风化后）.xlsx')
+data_kind_2.to_excel('过程性文件/data/第二问模型/亚类划分结果/铅钡（风化后）.xlsx')
 
 data_list_kind_1 = []
 kind_1_index = []
@@ -97,7 +97,7 @@ plt.xlabel('cluster')
 plt.ylabel('轮廓系数')
 plt.title('轮廓系数确定的最佳k值(铅钡)')
 plt.subplots_adjust(wspace=0.5)
-plt.savefig(r'picture/第二问图像/轮廓系数/最佳k值(高钾与铅钡)（风化后）.png')
+plt.savefig(r'过程性文件/picture/第二问图像/轮廓系数/最佳k值(高钾与铅钡)（风化后）.png')
 
 # 假如我要构造一个聚类数为3的聚类器
 estimator_kind_1 = KMeans(n_clusters=3)  # 构造聚类器
@@ -105,7 +105,7 @@ estimator_kind_1.fit(data_list_kind_1)  # 聚类
 label_pred = estimator_kind_1.labels_  # 获取聚类标签
 centroids = estimator_kind_1.cluster_centers_  # 获取聚类中心
 inertia = estimator_kind_1.inertia_  # 获取聚类准则的总和
-writer = pd.ExcelWriter('data/第一问数据/亚类划分结果/划分结果（归一化）（风化后）.xlsx')
+writer = pd.ExcelWriter('过程性文件/data/第一问数据/亚类划分结果/划分结果（归一化）（风化后）.xlsx')
 
 divide_dict_kind_1 = {}
 for num in range(len(kind_1_index)):
@@ -128,7 +128,7 @@ for num in range(len(kind_2_index)):
 
 divide_dict_df = pd.DataFrame(divide_dict_kind_2.values(), index=divide_dict_kind_2.keys(), columns=['分类'])
 divide_dict_df.to_excel(writer, sheet_name='铅钡分类')
-writer.save()
+writer.close()
 
 
 """
@@ -187,4 +187,4 @@ plt.xticks(range(len(ingredients) + 1), x_label, rotation=30)
 plt.plot(scores_kind_1, label='高钾', marker='*')
 plt.plot(scores_kind_2, label='铅钡', marker='*')
 plt.legend()
-plt.savefig(r'picture/第二问图像/灵敏度分析/分类的灵敏度分析(风化后）.png')
+plt.savefig(r'过程性文件/picture/第二问图像/灵敏度分析/分类的灵敏度分析(风化后）.png')
