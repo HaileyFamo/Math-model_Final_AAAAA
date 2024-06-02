@@ -298,24 +298,55 @@ for ingredient in weather_ingredients_dict.keys():
         'mean': np.mean(no_weather_ingredient_kind_2),
         'min': min(no_weather_ingredient_kind_2)
     }
-    # 绘制高钾图
-    plt.figure()
+     # 绘制高钾图
+    plt.figure(figsize=(12, 6))
     sns.set(font='SimHei')
-    plt.title('{}含量与风化关系图(高钾）'.format(ingredient))
+    plt.suptitle('{}含量与风化关系图(高钾）'.format(ingredient))
 
-    sns.kdeplot(weather_ingredient_kind_1, label='有风化高钾')
-    sns.kdeplot(no_weather_ingredient_kind_1, label='无风化高钾')
-    plt.legend()
+    # 箱线图
+    plt.subplot(1, 2, 1)
+    sns.boxplot(data=[weather_ingredient_kind_1, no_weather_ingredient_kind_1], palette=["coral", "skyblue"])
+    plt.xticks([0, 1], ['有风化高钾', '无风化高钾'])
+    plt.xlabel('风化情况')
+    plt.ylabel('含量')
+    plt.title('箱线图')
+
+    # 小提琴图
+    plt.subplot(1, 2, 2)
+    sns.violinplot(data=[weather_ingredient_kind_1, no_weather_ingredient_kind_1], palette=["coral", "skyblue"])
+    plt.xticks([0, 1], ['有风化高钾', '无风化高钾'])
+    plt.xlabel('风化情况')
+    plt.ylabel('含量')
+    plt.title('小提琴图')
+
+    plt.tight_layout(rect=[0, 0, 1, 0.96])
     plt.savefig(r'过程性文件/picture/第一问图像/核密度图/高钾/{}含量与风化关系图(高钾）.png'.format(ingredient))
+    plt.close()
 
     # 绘制铅钡图
-    plt.figure()
+    plt.figure(figsize=(12, 6))
     sns.set(font='SimHei')
-    plt.title('{}含量与风化关系图(铅钡）'.format(ingredient))
-    sns.kdeplot(weather_ingredient_kind_2, label='有风化铅钡')
-    sns.kdeplot(no_weather_ingredient_kind_2, label='无风化铅钡')
-    plt.legend()
+    plt.suptitle('{}含量与风化关系图(铅钡）'.format(ingredient))
+
+    # 箱线图
+    plt.subplot(1, 2, 1)
+    sns.boxplot(data=[weather_ingredient_kind_2, no_weather_ingredient_kind_2], palette=["coral", "skyblue"])
+    plt.xticks([0, 1], ['有风化铅钡', '无风化铅钡'])
+    plt.xlabel('风化情况')
+    plt.ylabel('含量')
+    plt.title('箱线图')
+
+    # 小提琴图
+    plt.subplot(1, 2, 2)
+    sns.violinplot(data=[weather_ingredient_kind_2, no_weather_ingredient_kind_2], palette=["coral", "skyblue"])
+    plt.xticks([0, 1], ['有风化铅钡', '无风化铅钡'])
+    plt.xlabel('风化情况')
+    plt.ylabel('含量')
+    plt.title('小提琴图')
+
+    plt.tight_layout(rect=[0, 0, 1, 0.96])
     plt.savefig(r'过程性文件/picture/第一问图像/核密度图/铅钡/{}含量与风化关系图（铅钡）.png'.format(ingredient))
+    plt.close()
 """
     根据风化点检测数据，预测其风化前的化学成分含量。
 """
